@@ -60,6 +60,7 @@ jobs:
       - name: Compute version
         id: meta
         run: |
+          GITHUB_REF_NAME="${GITHUB_REF_NAME#desktop-}"
           REF_NAME=$(echo "$GITHUB_REF_NAME" | tr '/' '-')
           echo "ref_name=${REF_NAME}" >> $GITHUB_OUTPUT
           echo "sha_short=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"

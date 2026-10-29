@@ -82,6 +82,12 @@ text = text.replace(dmg_step, """      - name: Sign the app (ad hoc) so Gatekeep
 
 """ + dmg_step, 1)
 
+# 4c. our release tags are desktop-vX.Y.Z; Euro-Office's version step expects vX.Y.Z
+ver = '          REF_NAME=$(echo "$GITHUB_REF_NAME"'
+if ver not in text:
+    sys.exit("could not find the version step; the upstream workflow changed")
+text = text.replace(ver, '          GITHUB_REF_NAME="${GITHUB_REF_NAME#desktop-}"\n' + ver, 1)
+
 # 5. triggers, and one job that publishes every package as a release
 text = re.sub(r"^on:\n(?:  .*\n|\n)*?(?=\S)", "on:\n  workflow_dispatch:\n  push:\n    tags: ['desktop-v*']\n\n", text, count=1, flags=re.M)
 text = text.rstrip() + """
