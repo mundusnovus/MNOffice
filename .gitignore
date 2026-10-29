@@ -1,0 +1,8 @@
+.DS_Store
+.venv/
+.env
+.env.*
+!.env.example
+build/
+.upstream/
+__pycache__/
