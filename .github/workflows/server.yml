@@ -1,0 +1,14 @@
+name: Office server checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  image:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          node --check portal/office.js
+          node --check portal/cloud-client.js
+          python3 -m py_compile tools/*.py
+          docker build -t christian-office:test .

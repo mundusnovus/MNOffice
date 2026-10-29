@@ -1,0 +1,7 @@
+.git
+.upstream
+.venv
+.env*
+build
+__pycache__
+fonts/upstream

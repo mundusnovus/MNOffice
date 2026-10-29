@@ -1,0 +1,2 @@
+// Source access stays visible inside every modified editor, including embedded sessions.
+(()=>{const add=()=>{if(document.getElementById('cs-source'))return;const a=document.createElement('a');a.id='cs-source';a.textContent='Christian Office · Source';a.href='/christian-office/NOTICE.txt';a.target='_blank';a.rel='noopener';document.body.append(a);};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',add);else add();})();

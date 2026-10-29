@@ -1,0 +1,34 @@
+{
+  "documentserver": {
+    "image": "ghcr.io/euro-office/documentserver@sha256:2fadc1b3dc99250d6576fc0c0f34349db6725b752b08e91db9831fbb803fc5c2",
+    "sourceReference": "7911d9e7a1e452d279cf3fff6c645d6f07300c75",
+    "sourceReferenceNote": "Source inspected for integration; upstream image supplies no revision label. Source-to-image provenance must be verified before release."
+  },
+  "desktop": {
+    "repository": "https://github.com/Euro-Office/DesktopEditors.git",
+    "commit": "0f59ed336486b31cbf3a72a41ca9cfc7d1a5857d",
+    "submodules": [
+      "100644 blob fbab61b22302488246a70ed872f9969a28b8668d\t.dockerignore",
+      "040000 tree 793677d69b96de87b2bf38967c5f8a5c219fa39b\t.github",
+      "100644 blob dd121608dcaab05bcb8f5f616df847c344bb3dc0\t.gitignore",
+      "100644 blob 83f8bcc3218151059870afdb34bf85e57890ae9a\t.gitmodules",
+      "100644 blob 7ca973f0c24ecbec3fee171ebf5227614342ae02\t.markdownlint.json",
+      "100644 blob fa8e9a3bd0aa7692f4efc525332c13d689ea2d86\tATTRIBUTION",
+      "100644 blob eec9352253fb868141c7f720e626020d0b1f501f\tCHANGELOG.md",
+      "100644 blob 1d8a77427f990893fc27bcc4f970141943e75349\tLICENSE",
+      "100644 blob c84b57f6f18b495e22b2da140a5614431f0705f6\tREADME.md",
+      "100644 blob 0d33009ae3e90e49a5e0b9aacf610bc40e339e90\tVERSION.txt",
+      "040000 tree fa33c0585d6a81918be468293de03d48e0d40aeb\tbuild",
+      "160000 commit a4a1ba1e9c8e6b6c841c3f059b3a8f82177d63f5\tcore",
+      "160000 commit 9cd64d6eedc72b75b7271f325f075cb8c73e59fa\tcore-fonts",
+      "160000 commit 7a1297b3172a0993401308fbd09633e0597704e0\tdesktop-apps",
+      "160000 commit 8cc8d747cb48953bf8020c2bfbb67ede6cb55c51\tdesktop-sdk",
+      "160000 commit 0020f5ed5174e2a213171c4c7da9ec06ca140869\tdictionaries",
+      "160000 commit 40cc88d509bac3283539b80b9534a41191d7c4ff\tdocument-templates",
+      "040000 tree d7bb8334807c94c63cf30c29718eb9170eba03f9\tscreenshots",
+      "160000 commit 40d9b7780f11a5cadc259f9b9815a364de8caa96\tsdkjs",
+      "160000 commit 5c2f5a010dae3581adda34d9bab20b1903c94081\tsdkjs-forms",
+      "160000 commit ce0ba49545810a56a3878081ab762c6a7ae8dd4e\tweb-apps"
+    ]
+  }
+}
