@@ -5,6 +5,8 @@ if [ "${#JWT_SECRET}" -lt 32 ]; then echo 'JWT_SECRET must have at least 32 char
 # nginx must start, or the editors are unreachable. Test the configuration first and say why it fails. Some hosts
 # cannot bind IPv6 even when the kernel has it; then serve on IPv4 only (Railway's proxy reaches us either way).
 CONF=/etc/euro-office/documentserver/nginx/ds.conf
+# The stock nginx site also claims the default server on port 80; the document server is the only site here.
+rm -f /etc/nginx/sites-enabled/default
 if ! out=$(nginx -t 2>&1); then
   echo "[christian-office] nginx config test failed:" >&2; echo "$out" >&2
 fi
