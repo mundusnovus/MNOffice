@@ -10,7 +10,7 @@ COPY server/editor.* /opt/christian-office/portal/
 COPY tools/apply_server_brand.py /opt/christian-office/
 COPY LICENSE NOTICE.md /opt/christian-office/portal/
 COPY server/start.sh /opt/christian-office/start.sh
-RUN python3 /opt/christian-office/apply_server_brand.py && fc-cache -f
+RUN python3 /opt/christian-office/apply_server_brand.py && fc-cache -f && nginx -t
 ENV JWT_ENABLED=true JWT_HEADER=AuthorizationJwt GENERATE_FONTS=true EXAMPLE_ENABLED=false PLUGINS_ENABLED=false
 EXPOSE 80
 ENTRYPOINT ["/opt/christian-office/start.sh"]
