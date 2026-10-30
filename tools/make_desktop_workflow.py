@@ -102,6 +102,12 @@ ver = '          REF_NAME=$(echo "$GITHUB_REF_NAME"'
 if ver not in text:
     sys.exit("could not find the version step; the upstream workflow changed")
 text = text.replace(ver, '          GITHUB_REF_NAME="${GITHUB_REF_NAME#desktop-}"\n' + ver, 1)
+# 4d. our tag names the release, but the editors keep Euro-Office's own version (VERSION.txt), exactly as its own
+#     untagged builds do; a 1.0.x product version broke the web-apps build
+is_tag = "          IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}\n"
+if is_tag not in text:
+    sys.exit("could not find the tag check in the version step; the upstream workflow changed")
+text = text.replace(is_tag, "          IS_TAG=false  # Mundus Novus: our desktop-vX.Y.Z tags name the release; the editors keep Euro-Office's version\n", 1)
 
 # 5. triggers, and one job that publishes every package as a release
 text = re.sub(r"^on:\n(?:  .*\n|\n)*?(?=\S)", "on:\n  workflow_dispatch:\n  push:\n    tags: ['desktop-v*']\n\n", text, count=1, flags=re.M)
