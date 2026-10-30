@@ -1,6 +1,6 @@
-Christian Sans 1.0 — 29 October 2026
-Derived from Liberation Serif 2.1.5 by Christian Systems.
-Family, full, unique and PostScript naming records renamed to Christian Sans.
+Novus Serif 1.0 — 29 October 2026
+Derived from Liberation Serif 2.1.5 by Mundus Novus.
+Family, full, unique and PostScript naming records renamed to Novus Serif.
 Outlines, metrics, hinting and styles are unchanged. This is a serif family.
 Original copyright and license records remain in every font. Distributed under
 SIL Open Font License 1.1 (OFL.txt), not the repository's AGPL license.

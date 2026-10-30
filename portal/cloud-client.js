@@ -1,9 +1,9 @@
-/* Christian Systems Cloud transport. GPL-3.0-only. App passwords stay on this device.
+/* Mundus Novus Cloud transport. GPL-3.0-only. App passwords stay on this device.
  * Only the fixed Cloud origin receives credentials. Every save is conditional.
  */
 (function(global){
 'use strict';
-const origin='https://cloud.christiansystems.org', key='cs.cloud.device.v1';
+const origin='https://cloud.mundusnovus.org', key='mn.cloud.device.v1';
 let credentials=null;try{credentials=JSON.parse(localStorage.getItem(key)||'null');}catch{}
 const encode=path=>path.split('/').map(encodeURIComponent).join('/');
 const safe=path=>{if(!path.startsWith('/')||path.split('/').some(p=>p==='.'||p==='..'||/[\\\x00-\x1f]/.test(p)))throw Error('Invalid Cloud path.');return path;};
@@ -13,7 +13,7 @@ const client={
  disconnect(){credentials=null;localStorage.removeItem(key);},
  async connect(){
   // Open synchronously so browsers associate this window with the person's click.
-  const popup=global.open('about:blank','christian-cloud-login','width=720,height=760');
+  const popup=global.open('about:blank','mn-cloud-login','width=720,height=760');
   if(!popup)throw Error('Allow a sign-in window to connect Cloud.');
   popup.opener=null;
   try{
@@ -33,7 +33,7 @@ const client={
   }catch(e){popup.close();throw e;}
  },
  async request(path,options={}){
-  if(!credentials)throw Error('Connect Christian Cloud first.');
+  if(!credentials)throw Error('Connect MNCloud first.');
   safe(path);
   const encoded=new TextEncoder().encode(credentials.user+':'+credentials.password);let raw='';for(const b of encoded)raw+=String.fromCharCode(b);
   const response=await fetch(origin+'/remote.php/dav/files/'+encodeURIComponent(credentials.user)+encode(path),{...options,credentials:'omit',redirect:'error',headers:{...options.headers,Authorization:'Basic '+btoa(raw)}});

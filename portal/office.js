@@ -15,16 +15,16 @@ $('connect').onclick=()=>run(async()=>{await cloud.connect();await refresh();});
 $('disconnect').onclick=()=>{cloud.disconnect();state();$('documents').replaceChildren();status('Disconnected on this device. Revoke this device password in Cloud’s security settings to end its access completely.');};
 $('refresh').onclick=()=>run(refresh);
 for(const b of document.querySelectorAll('[data-template]'))b.onclick=()=>run(async()=>{
- if(!cloud.connected()){status('Connect Christian Cloud first.');$('connect').focus();return;}
+ if(!cloud.connected()){status('Connect MNCloud first.');$('connect').focus();return;}
  const ext=b.dataset.template,dialog=$('name-dialog');$('name').value='Untitled';dialog.returnValue='cancel';dialog.showModal();$('name').select();
  const choice=await new Promise(resolve=>dialog.addEventListener('close',()=>resolve(dialog.returnValue),{once:true}));if(choice!=='ok')return;
  const name=$('name').value.trim();if(!name||/[\/\\\x00-\x1f]/.test(name)||name==='.'||name==='..')throw Error('Use a file name without slashes.');
- status('Creating your file…');const template=await fetch('/christian-office/templates/blank.'+ext);if(!template.ok)throw Error('The template could not be loaded.');
+ status('Creating your file…');const template=await fetch('/mn-office/templates/blank.'+ext);if(!template.ok)throw Error('The template could not be loaded.');
  await cloud.mkdir('/Documents');const path='/Documents/'+name.replace(new RegExp('\\.'+ext+'$','i'),'')+'.'+ext;
  await cloud.save(path,await template.blob());
  const file=(await cloud.list('/Documents')).find(f=>f.path===path);if(!file?.id)throw Error('Your document was created. Refresh the list to open it.');
  location.href=cloud.editorUrl(file.id);
 });
-try{document.documentElement.dataset.theme=localStorage.getItem('cs-theme')||'';}catch{}
-$('theme').onclick=()=>{const e=document.documentElement;const dark=e.dataset.theme==='dark'||(!e.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);e.dataset.theme=dark?'light':'dark';try{localStorage.setItem('cs-theme',e.dataset.theme);}catch{}};
+try{document.documentElement.dataset.theme=localStorage.getItem('mn-theme')||'';}catch{}
+$('theme').onclick=()=>{const e=document.documentElement;const dark=e.dataset.theme==='dark'||(!e.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);e.dataset.theme=dark?'light':'dark';try{localStorage.setItem('mn-theme',e.dataset.theme);}catch{}};
 run(refresh);

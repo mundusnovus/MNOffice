@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild Christian Sans from the unmodified, checksum-pinned OFL source fonts.
+"""Rebuild Novus Serif from the unmodified, checksum-pinned OFL source fonts.
 Install fonttools==4.60.1. All outlines, metrics, hints and copyright records stay intact.
 """
 from pathlib import Path
@@ -17,10 +17,10 @@ with tarfile.open(archive) as tar:
         font = TTFont(BytesIO(tar.extractfile(member).read()), recalcTimestamp=False)
         for record in font['name'].names:
             if record.nameID in (1, 3, 4, 6, 16, 18, 21):
-                text = record.toUnicode().replace('Liberation Serif', 'Christian Sans').replace('LiberationSerif', 'ChristianSans')
+                text = record.toUnicode().replace('Liberation Serif', 'Novus Serif').replace('LiberationSerif', 'NovusSerif')
                 record.string = text.encode(record.getEncoding())
         for flavor, suffix in ((None, 'ttf'), ('woff', 'woff')):
             font.flavor = flavor
-            font.save(ROOT / ('fonts/ChristianSans-' + style + '.' + suffix))
-        assert font['name'].getDebugName(1) == 'Christian Sans'
-        print('Christian Sans', style, len(font.getBestCmap()), 'characters')
+            font.save(ROOT / ('fonts/NovusSerif-' + style + '.' + suffix))
+        assert font['name'].getDebugName(1) == 'Novus Serif'
+        print('Novus Serif', style, len(font.getBestCmap()), 'characters')

@@ -1,4 +1,4 @@
-# ChristianOffice
+# MNOffice
 
 Read and follow AGENTS.md.
 

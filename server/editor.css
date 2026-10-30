@@ -1,6 +1,6 @@
-@font-face{font-family:Chancel;src:url('/christian-office/brand/Chancel-Regular.woff');font-display:swap}
+@font-face{font-family:Chancel;src:url('/mn-office/brand/Chancel-Regular.woff');font-display:swap}
 body,button,input,select,textarea,.menu-item,.dropdown-menu,.toolbar,.modal,.window,.header-caption,.btn-caption,.ribbon-tab{font-family:Chancel,serif!important}
-:root{--cs-ink:#140708;--cs-paper:#f6ebdd;--cs-red:#a8151b;--cs-gold:#f2b33d}
-button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--cs-red)!important;outline-offset:2px}
-#cs-source{position:fixed;bottom:3px;left:8px;z-index:10000;font:10px Chancel,serif;color:inherit;background:var(--background-normal,#f6ebdd);padding:3px 6px;border-radius:3px}
+:root{--mn-ink:#0c1222;--mn-paper:#f4ecdb;--mn-sea:#17449a;--mn-gold:#e9b04b}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--mn-sea)!important;outline-offset:2px}
+#mn-source{position:fixed;bottom:3px;left:8px;z-index:10000;font:10px Chancel,serif;color:inherit;background:var(--background-normal,#f4ecdb);padding:3px 6px;border-radius:3px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
