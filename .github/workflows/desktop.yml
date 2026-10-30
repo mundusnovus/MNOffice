@@ -154,6 +154,7 @@ jobs:
           path: build/mn-office
           sparse-checkout: desktop/brand
       - name: Place the brand overlay
+        shell: bash   # Windows runs PowerShell by default
         run: mkdir -p build/brands && cp -R build/mn-office/desktop/brand build/brands/mn-office-brand && rm -rf build/mn-office
 
       - name: Set up Docker Buildx
@@ -255,6 +256,7 @@ jobs:
           path: build/mn-office
           sparse-checkout: desktop/brand
       - name: Place the brand overlay
+        shell: bash   # Windows runs PowerShell by default
         run: mkdir -p build/brands && cp -R build/mn-office/desktop/brand build/brands/mn-office-brand && rm -rf build/mn-office
 
       - name: Debug workspace
@@ -469,6 +471,7 @@ jobs:
           path: build/mn-office
           sparse-checkout: desktop/brand
       - name: Place the brand overlay
+        shell: bash   # Windows runs PowerShell by default
         run: mkdir -p build/brands && cp -R build/mn-office/desktop/brand build/brands/mn-office-brand && rm -rf build/mn-office
 
       - uses: actions/download-artifact@v4
@@ -612,6 +615,7 @@ jobs:
           path: build/mn-office
           sparse-checkout: desktop/brand
       - name: Place the brand overlay
+        shell: bash   # Windows runs PowerShell by default
         run: mkdir -p build/brands && cp -R build/mn-office/desktop/brand build/brands/mn-office-brand && rm -rf build/mn-office
 
       - uses: actions/download-artifact@v4
@@ -794,6 +798,7 @@ jobs:
           path: build/mn-office
           sparse-checkout: desktop/brand
       - name: Place the brand overlay
+        shell: bash   # Windows runs PowerShell by default
         run: mkdir -p build/brands && cp -R build/mn-office/desktop/brand build/brands/mn-office-brand && rm -rf build/mn-office
 
       - uses: actions/download-artifact@v4

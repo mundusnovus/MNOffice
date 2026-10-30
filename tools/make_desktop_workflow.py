@@ -58,7 +58,7 @@ def our_brand(m):
     # in the Docker build of the editors and broke it
     return ("- name: Checkout the MNOffice brand\n" + sp + "uses: actions/checkout@v4\n" + sp + "with:\n" + sp + "  repository: ${{ github.repository }}\n"
             + sp + "  path: build/mn-office\n" + sp + "  sparse-checkout: desktop/brand\n"
-            + sp[:-2] + "- name: Place the brand overlay\n" + sp + "run: mkdir -p build/brands && cp -R build/mn-office/desktop/brand build/brands/mn-office-brand && rm -rf build/mn-office")
+            + sp[:-2] + "- name: Place the brand overlay\n" + sp + "shell: bash   # Windows runs PowerShell by default\n" + sp + "run: mkdir -p build/brands && cp -R build/mn-office/desktop/brand build/brands/mn-office-brand && rm -rf build/mn-office")
 text, n = brand_step.subn(our_brand, text)
 if n == 0:
     sys.exit("could not find the brand checkout steps; the upstream workflow changed")
