@@ -71,6 +71,18 @@ def fix_checkout(m):
 text = re.sub(r"- (?:name: [^\n]+\n\s*)?uses: actions/checkout@[^\n]+(?:\n\s+with:(?:\n\s{10,}[^\n]+)*)?", fix_checkout, text)
 text = text.replace("nextcloud-office-brand", "christian-office-brand")
 
+# 4a. the shared build (build-common) stays exactly as Euro-Office's own row: it builds the editors that every brand
+#     shares, and the brand is applied afterwards in each platform's job.
+a, b = text.find("\n  build-common:"), text.find("\n  build-windows:")
+if a < 0 or b < 0:
+    sys.exit("could not find build-common; the upstream workflow changed")
+common = text[a:b]
+for ours, theirs in (('branding_dir: "./build/brands/christian-office-brand"', 'branding_dir: "."'),
+                     ("company_name: Christian Systems", "company_name: Euro-Office"),
+                     ("product_name: Christian Office", "product_name: Euro-Office")):
+    common = common.replace(ours, theirs)
+text = text[:a] + common + text[b:]
+
 # 4b. sign the macOS app ad hoc before it goes into the disk image, so macOS does not call it damaged
 dmg_step = '      - name: Build the DMG installer\n'
 if dmg_step not in text:
