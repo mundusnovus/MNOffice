@@ -109,6 +109,10 @@ if is_tag not in text:
     sys.exit("could not find the tag check in the version step; the upstream workflow changed")
 text = text.replace(is_tag, "          IS_TAG=false  # Mundus Novus: our desktop-vX.Y.Z tags name the release; the editors keep Euro-Office's version\n", 1)
 
+# 4e. GitHub retires its macOS 14 machines on 2 November 2026 (and switches them off in scheduled brownouts before
+#     then); build the macOS app on macOS 15
+text = text.replace("runs-on: macos-14", "runs-on: macos-15")
+
 # 5. triggers, and one job that publishes every package as a release
 text = re.sub(r"^on:\n(?:  .*\n|\n)*?(?=\S)", "on:\n  workflow_dispatch:\n  push:\n    tags: ['desktop-v*']\n\n", text, count=1, flags=re.M)
 text = text.rstrip() + """
