@@ -54,8 +54,11 @@ text = re.sub(r"\n(\s*)token: \$\{\{ secrets\.EURO_OFFICE_MIRROR_TOKEN \}\}", ""
 brand_step = re.compile(r"- name: Checkout nextcloud-office-brand repo\n(\s*)uses: [^\n]+\n(?:\s+[^\n]+\n)*?\s*path: build/brands/nextcloud-office-brand")
 def our_brand(m):
     sp = m.group(1)
+    # only desktop/brand, and nothing of ours left in the build folder afterwards: the whole repository there ends up
+    # in the Docker build of the editors and broke it
     return ("- name: Checkout the Christian Office brand\n" + sp + "uses: actions/checkout@v4\n" + sp + "with:\n" + sp + "  repository: ${{ github.repository }}\n"
-            + sp + "  path: build/cs-office\n" + sp[:-2] + "- name: Place the brand overlay\n" + sp + "run: mkdir -p build/brands && cp -R build/cs-office/desktop/brand build/brands/christian-office-brand")
+            + sp + "  path: build/cs-office\n" + sp + "  sparse-checkout: desktop/brand\n"
+            + sp[:-2] + "- name: Place the brand overlay\n" + sp + "run: mkdir -p build/brands && cp -R build/cs-office/desktop/brand build/brands/christian-office-brand && rm -rf build/cs-office")
 text, n = brand_step.subn(our_brand, text)
 if n == 0:
     sys.exit("could not find the brand checkout steps; the upstream workflow changed")
