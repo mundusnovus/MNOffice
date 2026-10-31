@@ -1,1 +1,1 @@
-MNOffice packaging overlay for Euro-Office desktop builds (files here replace desktop-apps/package/ upstream).
+Asteria Office packaging overlay for Euro-Office desktop builds (files here replace desktop-apps/package/ upstream).

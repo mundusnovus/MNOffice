@@ -8,12 +8,12 @@ CONF=/etc/euro-office/documentserver/nginx/ds.conf
 # The stock nginx site also claims the default server on port 80; the document server is the only site here.
 rm -f /etc/nginx/sites-enabled/default
 if ! out=$(nginx -t 2>&1); then
-  echo "[mn-office] nginx config test failed:" >&2; echo "$out" >&2
+  echo "[asteria-office] nginx config test failed:" >&2; echo "$out" >&2
 fi
 if ! nginx -t >/dev/null 2>&1 || ! (command -v python3 >/dev/null && python3 -c "import socket;s=socket.socket(socket.AF_INET6);s.bind(('::',0))" 2>/dev/null); then
-  echo "[mn-office] no usable IPv6: serving on IPv4 only" >&2
+  echo "[asteria-office] no usable IPv6: serving on IPv4 only" >&2
   sed -i '/listen[[:space:]]*\[::\]/d; s/listen 0\.0\.0\.0:80;/listen 0.0.0.0:80 default_server;/' "$CONF"
   for f in /etc/euro-office/documentserver/nginx/ds.conf.tmpl /etc/euro-office/documentserver/nginx/ds-ssl.conf.tmpl; do [ -f "$f" ] && sed -i '/listen[[:space:]]*\[::\]/d' "$f" || true; done
 fi
-nginx -t 2>&1 | sed 's/^/[mn-office] /' >&2 || true
+nginx -t 2>&1 | sed 's/^/[asteria-office] /' >&2 || true
 exec /entrypoint.sh "$@"

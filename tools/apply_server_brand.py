@@ -9,14 +9,14 @@ if len(htmls)<3:raise SystemExit('Unexpected editor layout; update the pinned ov
 for p in htmls:
     s=p.read_text()
     if '</head>' not in s:raise SystemExit('Missing editor head: '+str(p))
-    s=re.sub(r'<title>[^<]*</title>','<title>MNOffice</title>',s)
-    s=s.replace('</head>','<link rel="stylesheet" href="/mn-office/editor.css"><script defer src="/mn-office/editor.js"></script></head>')
+    s=re.sub(r'<title>[^<]*</title>','<title>Asteria Office</title>',s)
+    s=s.replace('</head>','<link rel="stylesheet" href="/asteria-office/editor.css"><script defer src="/asteria-office/editor.js"></script></head>')
     p.write_text(s)
 for p in (root/'web-apps').rglob('favicon.ico'):
-    shutil.copy('/opt/mn-office/brand/icons/office.ico',p)
+    shutil.copy('/opt/asteria-office/brand/icons/office.ico',p)
 p=conf/'nginx/includes/ds-docservice.conf'
-s=p.read_text();s,n=re.subn(r'location = / \{ return 302 [^;]+; \}', 'location = / { root /opt/mn-office/portal; try_files /index.html =404; }',s)
+s=p.read_text();s,n=re.subn(r'location = / \{ return 302 [^;]+; \}', 'location = / { root /opt/asteria-office/portal; try_files /index.html =404; }',s)
 if n!=1:raise SystemExit('Root route changed upstream; refusing to guess.')
-s+='\nlocation ^~ /mn-office/ { alias /opt/mn-office/portal/; add_header X-Content-Type-Options nosniff; }\n'
+s+='\nlocation ^~ /asteria-office/ { alias /opt/asteria-office/portal/; add_header X-Content-Type-Options nosniff; }\n'
 p.write_text(s)
 print('Branded',len(htmls),'editor entry points and the Office portal.')

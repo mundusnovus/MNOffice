@@ -13,7 +13,7 @@ for extension in ('docx','xlsx','pptx','pdf'):
             if name.endswith('.xml'):
                 text=data.decode('utf-8')
                 for old in ('Times New Roman','Calibri','Aptos','Arial','Liberation Serif','Cambria','Carlito'):
-                    text=text.replace('"'+old+'"','"Novus Serif"')
+                    text=text.replace('"'+old+'"','"Asteria Serif"')
                 # Explicit faces must outrank Office theme font references.
                 text=re.sub(r' w:(asciiTheme|hAnsiTheme|eastAsiaTheme|cstheme)="[^"]*"','',text)
                 data=text.encode('utf-8')

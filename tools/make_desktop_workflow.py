@@ -1,5 +1,5 @@
 """Writes .github/workflows/desktop.yml: Euro-Office's own desktop build (Windows, Linux, macOS), pinned to the
-DesktopEditors commit in upstream.lock.json, rebranded as MNOffice.
+DesktopEditors commit in upstream.lock.json, rebranded as Asteria Office.
 
 We start from Euro-Office's unbranded, unsigned "euro-office" rows, rename them, point the icons and packaging overlay at
 desktop/brand/ in this repository, drop the Nextcloud brand and Euro-Office's own publishing jobs, and add one job that
@@ -33,18 +33,18 @@ cut = re.search(r"\n  pr-comment:\n", text)
 text = text[:cut.start()] + "\n" if cut else text
 
 # 3. the brand: names, bundle id, icons and the packaging overlay
-rename = [("app_bundle: Euro-Office.app", "app_bundle: MNOffice.app"),
-          ("package_name: Euro-Office-DesktopEditors", "package_name: MNOffice"),
-          ("company_name: Euro-Office", "company_name: Mundus Novus"),
-          ("product_name: Euro-Office", "product_name: MNOffice"),
-          ("publisher_name: Euro-Office", "publisher_name: Mundus Novus"),
-          ("publisher_url: https://github.com/Euro-Office/DesktopEditors", "publisher_url: https://office.mundusnovus.org"),
-          ("bundle_id: asc.euro-office.Euro-Office", "bundle_id: org.mundusnovus.office"),
-          ('app_icon_svg: ""', "app_icon_svg: build/brands/mn-office-brand/svg/app-icon.svg"),
-          ('tab_icon_light_svg: ""', "tab_icon_light_svg: build/brands/mn-office-brand/svg/logo-light.svg"),
-          ('tab_icon_dark_svg: ""', "tab_icon_dark_svg: build/brands/mn-office-brand/svg/logo-dark.svg"),
-          ('branding_dir: "."', 'branding_dir: "./build/brands/mn-office-brand"'),
-          ("- name: euro-office", "- name: mn-office"),
+rename = [("app_bundle: Euro-Office.app", "app_bundle: Asteria Office.app"),
+          ("package_name: Euro-Office-DesktopEditors", "package_name: Asteria-Office"),
+          ("company_name: Euro-Office", "company_name: Asteria Technology"),
+          ("product_name: Euro-Office", "product_name: Asteria Office"),
+          ("publisher_name: Euro-Office", "publisher_name: Asteria Technology"),
+          ("publisher_url: https://github.com/Euro-Office/DesktopEditors", "publisher_url: https://office.asteria.technology"),
+          ("bundle_id: asc.euro-office.Euro-Office", "bundle_id: technology.asteria.office"),
+          ('app_icon_svg: ""', "app_icon_svg: build/brands/asteria-office-brand/svg/app-icon.svg"),
+          ('tab_icon_light_svg: ""', "tab_icon_light_svg: build/brands/asteria-office-brand/svg/logo-light.svg"),
+          ('tab_icon_dark_svg: ""', "tab_icon_dark_svg: build/brands/asteria-office-brand/svg/logo-dark.svg"),
+          ('branding_dir: "."', 'branding_dir: "./build/brands/asteria-office-brand"'),
+          ("- name: euro-office", "- name: asteria-office"),
           ("REGISTRY: ghcr.io/euro-office", "REGISTRY: ghcr.io/mundusnovus")]
 for a, b in rename:
     text = text.replace(a, b)
@@ -56,9 +56,9 @@ def our_brand(m):
     sp = m.group(1)
     # only desktop/brand, and nothing of ours left in the build folder afterwards: the whole repository there ends up
     # in the Docker build of the editors and broke it
-    return ("- name: Checkout the MNOffice brand\n" + sp + "uses: actions/checkout@v4\n" + sp + "with:\n" + sp + "  repository: ${{ github.repository }}\n"
-            + sp + "  path: build/mn-office\n" + sp + "  sparse-checkout: desktop/brand\n"
-            + sp[:-2] + "- name: Place the brand overlay\n" + sp + "shell: bash   # Windows runs PowerShell by default\n" + sp + "run: mkdir -p build/brands && cp -R build/mn-office/desktop/brand build/brands/mn-office-brand && rm -rf build/mn-office")
+    return ("- name: Checkout the Asteria Office brand\n" + sp + "uses: actions/checkout@v4\n" + sp + "with:\n" + sp + "  repository: ${{ github.repository }}\n"
+            + sp + "  path: build/asteria-office\n" + sp + "  sparse-checkout: desktop/brand\n"
+            + sp[:-2] + "- name: Place the brand overlay\n" + sp + "shell: bash   # Windows runs PowerShell by default\n" + sp + "run: mkdir -p build/brands && cp -R build/asteria-office/desktop/brand build/brands/asteria-office-brand && rm -rf build/asteria-office")
 text, n = brand_step.subn(our_brand, text)
 if n == 0:
     sys.exit("could not find the brand checkout steps; the upstream workflow changed")
@@ -72,7 +72,7 @@ def fix_checkout(m):
     sp = ind.group(1) + "  "
     return block.replace(ind.group(0), ind.group(0) + "\n" + sp + "repository: Euro-Office/DesktopEditors\n" + sp + "ref: " + pin, 1)
 text = re.sub(r"- (?:name: [^\n]+\n\s*)?uses: actions/checkout@[^\n]+(?:\n\s+with:(?:\n\s{10,}[^\n]+)*)?", fix_checkout, text)
-text = text.replace("nextcloud-office-brand", "mn-office-brand")
+text = text.replace("nextcloud-office-brand", "asteria-office-brand")
 
 # 4a. the shared build (build-common) stays exactly as Euro-Office's own row: it builds the editors that every brand
 #     shares, and the brand is applied afterwards in each platform's job.
@@ -80,9 +80,9 @@ a, b = text.find("\n  build-common:"), text.find("\n  build-windows:")
 if a < 0 or b < 0:
     sys.exit("could not find build-common; the upstream workflow changed")
 common = text[a:b]
-for ours, theirs in (('branding_dir: "./build/brands/mn-office-brand"', 'branding_dir: "."'),
-                     ("company_name: Mundus Novus", "company_name: Euro-Office"),
-                     ("product_name: MNOffice", "product_name: Euro-Office")):
+for ours, theirs in (('branding_dir: "./build/brands/asteria-office-brand"', 'branding_dir: "."'),
+                     ("company_name: Asteria Technology", "company_name: Euro-Office"),
+                     ("product_name: Asteria Office", "product_name: Euro-Office")):
     common = common.replace(ours, theirs)
 text = text[:a] + common + text[b:]
 
@@ -107,7 +107,7 @@ text = text.replace(ver, '          GITHUB_REF_NAME="${GITHUB_REF_NAME#desktop-}
 is_tag = "          IS_TAG=${{ startsWith(github.ref, 'refs/tags/') }}\n"
 if is_tag not in text:
     sys.exit("could not find the tag check in the version step; the upstream workflow changed")
-text = text.replace(is_tag, "          IS_TAG=false  # Mundus Novus: our desktop-vX.Y.Z tags name the release; the editors keep Euro-Office's version\n", 1)
+text = text.replace(is_tag, "          IS_TAG=false  # Asteria Technology: our desktop-vX.Y.Z tags name the release; the editors keep Euro-Office's version\n", 1)
 
 # 4e. GitHub retires its macOS 14 machines on 2 November 2026 (and switches them off in scheduled brownouts before
 #     then); build the macOS app on macOS 15
@@ -117,7 +117,7 @@ text = text.replace("runs-on: macos-14", "runs-on: macos-15")
 text = re.sub(r"^on:\n(?:  .*\n|\n)*?(?=\S)", "on:\n  workflow_dispatch:\n  push:\n    tags: ['desktop-v*']\n\n", text, count=1, flags=re.M)
 text = text.rstrip() + """
 
-  # Mundus Novus: publish every package from this run as one GitHub release
+  # Asteria Technology: publish every package from this run as one GitHub release
   publish:
     needs: [build-linux, build-windows, build-macos]
     if: ${{ always() && startsWith(github.ref, 'refs/tags/') }}
@@ -127,17 +127,17 @@ text = text.rstrip() + """
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: '*-packages-mn-office-*'
+          pattern: '*-packages-asteria-office-*'
           path: dist
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
-          name: MNOffice Desktop ${{ github.ref_name }}
+          name: Asteria Office Desktop ${{ github.ref_name }}
           files: dist/**
           fail_on_unmatched_files: false
 """
 header = ("# Generated by tools/make_desktop_workflow.py from Euro-Office's DesktopEditors build (commit %s).\n"
-          "# Do not edit by hand: change the generator and re-run it. Euro-Office: AGPL-3.0; this file: Mundus Novus Affero License.\n") % pin
+          "# Do not edit by hand: change the generator and re-run it. Euro-Office: AGPL-3.0; this file: Asteria Affero License.\n") % pin
 os.makedirs(os.path.join(ROOT, ".github", "workflows"), exist_ok=True)
 open(os.path.join(ROOT, ".github", "workflows", "desktop.yml"), "w").write(header + text)
-print("wrote .github/workflows/desktop.yml; mn-office rows:", text.count("- name: mn-office"))
+print("wrote .github/workflows/desktop.yml; asteria-office rows:", text.count("- name: asteria-office"))

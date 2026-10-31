@@ -1,6 +1,6 @@
-@font-face{font-family:Chancel;src:url('/mn-office/brand/Chancel-Regular.woff');font-display:swap}
-body,button,input,select,textarea,.menu-item,.dropdown-menu,.toolbar,.modal,.window,.header-caption,.btn-caption,.ribbon-tab{font-family:Chancel,serif!important}
-:root{--mn-ink:#0c1222;--mn-paper:#f4ecdb;--mn-sea:#17449a;--mn-gold:#e9b04b}
-button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--mn-sea)!important;outline-offset:2px}
-#mn-source{position:fixed;bottom:3px;left:8px;z-index:10000;font:10px Chancel,serif;color:inherit;background:var(--background-normal,#f4ecdb);padding:3px 6px;border-radius:3px}
+@font-face{font-family:Asteria Pixel;src:url('/asteria-office/brand/AsteriaPixel-Regular.woff');font-display:swap}
+body,button,input,select,textarea,.menu-item,.dropdown-menu,.toolbar,.modal,.window,.header-caption,.btn-caption,.ribbon-tab{font-family:Asteria Pixel,serif!important}
+:root{--as-ink:#0a1518;--as-paper:#f4ecdb;--as-sea:#116674;--as-gold:#e9b04b}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--as-sea)!important;outline-offset:2px}
+#as-source{position:fixed;bottom:3px;left:8px;z-index:10000;font:10px Asteria Pixel,serif;color:inherit;background:var(--background-normal,#f4ecdb);padding:3px 6px;border-radius:3px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
